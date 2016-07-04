@@ -10,28 +10,40 @@ struct node
   node* right;
   node* left;
 };
-node* create(int d)
+
+node* insertBtree(node*n,int d,int c=1)
 {
-  node* n=new node;
-  n->data=d;
-  n->colour=false;
-  n->parent=NULL;
-  n->right=NULL;
-  n->left=NULL;
-  return n;
-}
-node* insertBtree(node*n,int d)
-{
-  if(n==NULL)
+  if(n==NULL&&c==1)
   {
-    std::cout << "\nNULL:" << std::endl;
-    return create(d);
+    node* n=new node;
+    n->data=d;
+    n->colour=c=true;
+    n->parent=NULL;
+    n->right=NULL;
+    n->left=NULL;
+    return n;
   }
+  else
+    if(n==NULL&&c==0){
+      node* n=new node;
+      n->data=d;
+      n->colour=false;
+      n->parent=NULL;
+      n->right=NULL;
+      n->left=NULL;
+      return n;
+    }
 
     if(d<=n->data)
-        {n->left=insertBtree(n->left,d);std::cout << "left" << std::endl;}
+        {
+          n->left=insertBtree(n->left,d);
+          n->left->parent=n;
+        }
       else
-        {n->right=insertBtree(n->right,d);std::cout << "right" << std::endl;}
+        {
+          n->right=insertBtree(n->right,d);
+          n->right->parent=n;
+        }
         return n;
 }
 
@@ -39,7 +51,7 @@ void printBtree(node* temp) {
   if(temp!=NULL)
   {
     printBtree(temp->left);
-    cout<<" "<<temp->data;
+    cout<<" "<<temp->data<<":"<<temp->colour<<":";
     printBtree(temp->right);
   }
   return;
@@ -48,11 +60,18 @@ void printBtree(node* temp) {
 int main()
 {
   node *root=NULL;
-  int choice;
+  int choice=1;
+  int data;
+
+  cout<<"\nenter data:";
+  cin>>data;
+  root=insertBtree(root,data,0);
+
   while(choice!=0)
   {
     cout<<"\nenter choice(1.Insert 2.print):";
     cin>>choice;
+
     switch (choice) {
       case 1: int data;
               cout<<"\nenter data:";
