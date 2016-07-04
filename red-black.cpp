@@ -11,30 +11,31 @@ struct node
   node* left;
 };
 
-node* insertBtree(node*n,int d,int c=1)
+node* create(int d)
+{
+  node* newNode=new node;
+  newNode->data=d;
+  newNode->colour=false;
+  newNode->parent=NULL;
+  newNode->right=NULL;
+  newNode->left=NULL;
+  return newNode;
+}
+
+node* insertBtree(node* &n,node* &d,int c=1)
 {
   if(n==NULL&&c==1)
   {
-    node* n=new node;
-    n->data=d;
-    n->colour=c=true;
-    n->parent=NULL;
-    n->right=NULL;
-    n->left=NULL;
-    return n;
+    d->colour=true;
+    return d;
   }
   else
     if(n==NULL&&c==0){
-      node* n=new node;
-      n->data=d;
-      n->colour=false;
-      n->parent=NULL;
-      n->right=NULL;
-      n->left=NULL;
-      return n;
+      d->colour=false;
+      return d;
     }
 
-    if(d<=n->data)
+    if(d->data<=n->data)
         {
           n->left=insertBtree(n->left,d);
           n->left->parent=n;
@@ -44,14 +45,15 @@ node* insertBtree(node*n,int d,int c=1)
           n->right=insertBtree(n->right,d);
           n->right->parent=n;
         }
-        return n;
+        return n;//you need to return the appropriate nodes
+                //thus updating all the node value after insertion
 }
 
 void printBtree(node* temp) {
   if(temp!=NULL)
   {
     printBtree(temp->left);
-    cout<<" "<<temp->data<<":"<<temp->colour<<":";
+    cout<<" "<<temp->data;//<<":"<<temp->parent<<":";
     printBtree(temp->right);
   }
   return;
@@ -65,20 +67,21 @@ int main()
 
   cout<<"\nenter data:";
   cin>>data;
-  root=insertBtree(root,data,0);
+  node *newroot=create(data);
+  root=insertBtree(root,newroot,0);/*root need to change its value from null hence root
+                                    is assigned the value of return*/
 
   while(choice!=0)
   {
     cout<<"\nenter choice(1.Insert 2.print):";
     cin>>choice;
-
+    node *newNode=create(0);
     switch (choice) {
       case 1: int data;
               cout<<"\nenter data:";
               cin>>data;
-              //if(root!=NULL)
-              //std::cout << "\n" <<root->data<<":l:"<<root->left<<":r: "<<root->right<< std::endl;
-              root=insertBtree(root,data);
+              newNode->data=data;
+              insertBtree(root,newNode);
               break;
       case 2:printBtree(root);
               break;
