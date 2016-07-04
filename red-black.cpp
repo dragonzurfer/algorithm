@@ -57,8 +57,8 @@ int main()
       case 1: int data;
               cout<<"\nenter data:";
               cin>>data;
-              if(root!=NULL)
-              std::cout << "\n" <<root->data<<":l:"<<root->left<<":r: "<<root->right<< std::endl;
+              //if(root!=NULL)
+              //std::cout << "\n" <<root->data<<":l:"<<root->left<<":r: "<<root->right<< std::endl;
               root=insertBtree(root,data);
               break;
       case 2:printBtree(root);
