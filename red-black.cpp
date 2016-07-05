@@ -59,6 +59,54 @@ void printBtree(node* temp) {
   return;
 }
 
+void rr(node*&root,node*&pt)
+{
+  node *pt_left = pt->left;
+
+    pt->left = pt_left->right;
+
+    if (pt->left != NULL)
+        pt->left->parent = pt;
+
+    pt_left->parent = pt->parent;
+
+    if (pt->parent == NULL)
+        root = pt_left;
+    else if (pt == pt->parent->left)
+        pt->parent->left = pt_left;
+    else
+        pt->parent->right = pt_left;
+
+    pt_left->right = pt;
+    pt->parent = pt_left;
+
+}
+void rl(node*&root,node*&pt)
+{
+  node* pt_right=pt->right;
+  pt->right=pt_right->left;
+
+  if(pt->right!=NULL)
+      pt->right->parent=pt;
+
+  pt_right->parent=pt->parent;
+
+  if(pt->parent==NULL)
+      root=pt_right;
+  else if(pt->parent->left==pt)
+      pt->parent->left=pt_right;
+  else
+      pt->parent->right=pt_right;
+
+  pt_right->left=pt;
+  pt->parent=pt_right;
+}
+
+void balanceTree(node* root,node* newNode)
+{
+
+}
+
 int main()
 {
   node *root=NULL;
@@ -82,6 +130,9 @@ int main()
               cin>>data;
               newNode->data=data;
               insertBtree(root,newNode);
+              balanceTree(root,newNode);
+              if(root->left!=NULL&&root->right!=NULL)
+              {rl(root,newNode->parent);printf("%d:data,%dright,%drr:\n",root->data,root->left->data,root->left->left->data );}
               break;
       case 2:printBtree(root);
               break;
