@@ -62,16 +62,16 @@ void printBtree(node* temp) {
 void rr(node*&root,node*&pt)
 {
   node *pt_left = pt->left;
-
+    cout<<"\nptleft:"<<pt_left->data;
     pt->left = pt_left->right;
-
+    cout<<"\npt->left:"<<pt_left->right;
     if (pt->left != NULL)
         pt->left->parent = pt;
 
     pt_left->parent = pt->parent;
 
     if (pt->parent == NULL)
-        root = pt_left;
+      {  root = pt_left;cout<<endl<<"pt_left"<<pt_left->data;}
     else if (pt == pt->parent->left)
         pt->parent->left = pt_left;
     else
@@ -79,27 +79,33 @@ void rr(node*&root,node*&pt)
 
     pt_left->right = pt;
     pt->parent = pt_left;
+    cout<<"\npt_data:"<<pt->data<<":"<<pt->right->data<<":";
 
 }
 void rl(node*&root,node*&pt)
 {
-  node* pt_right=pt->right;
-  pt->right=pt_right->left;
+  node *pt_right = pt->right;
 
-  if(pt->right!=NULL)
-      pt->right->parent=pt;
+    pt->right = pt_right->left;
 
-  pt_right->parent=pt->parent;
+    if (pt->right != NULL)
+        pt->right->parent = pt;
 
-  if(pt->parent==NULL)
-      root=pt_right;
-  else if(pt->parent->left==pt)
-      pt->parent->left=pt_right;
-  else
-      pt->parent->right=pt_right;
+    pt_right->parent = pt->parent;
 
-  pt_right->left=pt;
-  pt->parent=pt_right;
+    if (pt->parent == NULL)
+        root = pt_right;
+
+    else if (pt == pt->parent->left)
+        pt->parent->left = pt_right;
+
+    else
+        pt->parent->right = pt_right;
+
+    pt_right->left = pt;
+    pt->parent = pt_right;
+    cout<<"ok";
+
 }
 
 void balanceTree(node* root,node* newNode)
@@ -130,12 +136,10 @@ int main()
               cin>>data;
               newNode->data=data;
               insertBtree(root,newNode);
-              balanceTree(root,newNode);
-              if(root->left!=NULL&&root->right!=NULL)
-              {rl(root,newNode->parent);printf("%d:data,%dright,%drr:\n",root->data,root->left->data,root->left->left->data );}
               break;
       case 2:printBtree(root);
               break;
+
     }
   }
   return 0;
