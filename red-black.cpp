@@ -53,7 +53,7 @@ void printBtree(node* temp) {
   if(temp!=NULL)
   {
     printBtree(temp->left);
-    cout<<" "<<temp->data;//<<":"<<temp->parent<<":";
+    cout<<" "<<temp->data<<":"<<temp->colour<<"  ";
     printBtree(temp->right);
   }
   return;
@@ -110,6 +110,53 @@ void rl(node*&root,node*&pt)
 
 void balanceTree(node* root,node* newNode)
 {
+  node*parent=NULL;
+  node*grandparent=NULL;
+  node*uncle=NULL;
+  while(newNode!=root&&newNode->colour!=false&&newNode->parent->colour==true)
+  {
+    parent=newNode->parent;
+
+
+      grandparent=parent->parent;
+
+      //newNodes parent is left child of grandparent
+      if(parent==grandparent->left)
+      {
+        uncle=grandparent->right;
+
+        if((uncle!=NULL)&&uncle->colour==true)
+        {
+          if(grandparent!=root)
+          grandparent->colour=true;
+
+          parent->colour=false;
+          uncle->colour=false;
+          newNode=grandparent;
+        }
+        else
+        {
+          if(newNode==parent->right)
+          {
+            rl(root,parent);
+            newNode=parent;//the old parent is now in the left hence its newNode
+            parent=newNode->parent;//in rl we've changed the parent pointer of the old parent to the old newNode
+            //this statement makes the old newNode the new parent
+          }
+          cout<<"\nnewNode:"<<newNode->data;
+          rr(root,newNode);
+          parent->colour=false;
+          grandparent->colour=true;
+          newNode=parent;
+
+        }
+
+      }
+
+
+
+  }
+
 
 }
 
@@ -136,8 +183,12 @@ int main()
               cin>>data;
               newNode->data=data;
               insertBtree(root,newNode);
+              cout<<"\ndone inserting";
+              balanceTree(root,newNode);
+              cout<<"\n DOne! balancing";
               break;
       case 2:printBtree(root);
+              cout<<"\nDone!";
               break;
 
     }
