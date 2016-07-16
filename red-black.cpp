@@ -22,7 +22,7 @@ node* create(int d)
   return newNode;
 }
 
-node* insertBtree(node* &n,node* &d,int c=1)
+node* insertBtree(node*&n,node*&d,int c=1)
 {
   if(n==NULL&&c==1)
   {
@@ -49,37 +49,46 @@ node* insertBtree(node* &n,node* &d,int c=1)
                 //thus updating all the node value after insertion
 }
 
-void printBtree(node* temp) {
+void printBtree(node* temp,node*root) {
   if(temp!=NULL)
   {
-    printBtree(temp->left);
-    cout<<" "<<temp->data<<":"<<temp->colour<<"  ";
-    printBtree(temp->right);
+    printBtree(temp->left,root);
+    cout<<" "<<temp->data<<":"<<temp->colour;
+    if(temp!=root)
+    cout<<"p:"<<temp->parent->data;
+    cout<<" ";
+    printBtree(temp->right,root);
   }
   return;
 }
 
 void rr(node*&root,node*&pt)
 {
-  node *pt_left = pt->left;
-    cout<<"\nptleft:"<<pt_left->data;
-    pt->left = pt_left->right;
-    cout<<"\npt->left:"<<pt_left->right;
-    if (pt->left != NULL)
-        pt->left->parent = pt;
+  node*parent=NULL;
+  node*pt_right=NULL;
+  if(pt!=root)
+    parent=pt->parent;
+  else
+    {cout<<"\n!sorry can't right rotate at root!";return;}
 
-    pt_left->parent = pt->parent;
-
-    if (pt->parent == NULL)
-      {  root = pt_left;cout<<endl<<"pt_left"<<pt_left->data;}
-    else if (pt == pt->parent->left)
-        pt->parent->left = pt_left;
+  pt_right=pt->right;
+  pt->parent=parent->parent;
+  if(parent!=root)
+  {
+    if(parent==parent->parent->right)
+      parent->parent->right=pt;
     else
-        pt->parent->right = pt_left;
-
-    pt_left->right = pt;
-    pt->parent = pt_left;
-    cout<<"\npt_data:"<<pt->data<<":"<<pt->right->data<<":";
+      parent->parent->left=pt;
+  }
+  else{
+    pt->colour=false;
+    root=pt;
+  }
+  parent->parent=pt;
+  pt->right=parent;
+  parent->left=pt_right;
+  if(pt_right!=NULL)
+  pt_right->parent=parent;
 
 }
 void rl(node*&root,node*&pt)
@@ -108,7 +117,7 @@ void rl(node*&root,node*&pt)
 
 }
 
-void balanceTree(node* root,node* newNode)
+void balanceTree(node*&root,node*&newNode)
 {
   node*parent=NULL;
   node*grandparent=NULL;
@@ -143,7 +152,7 @@ void balanceTree(node* root,node* newNode)
             parent=newNode->parent;//in rl we've changed the parent pointer of the old parent to the old newNode
             //this statement makes the old newNode the new parent
           }
-          cout<<"\nnewNode:"<<newNode->data;
+
           rr(root,newNode);
           parent->colour=false;
           grandparent->colour=true;
@@ -158,6 +167,15 @@ void balanceTree(node* root,node* newNode)
   }
 
 
+}
+void search(node*&r,node*&root,int num)
+{
+  if(num<root->data)
+    search(r,root->left,num);
+  else if(num>root->data)
+    search(r,root->right,num);
+  else if(root->data==num)
+    rr(r,root);
 }
 
 int main()
@@ -183,12 +201,14 @@ int main()
               cin>>data;
               newNode->data=data;
               insertBtree(root,newNode);
-              cout<<"\ndone inserting";
-              balanceTree(root,newNode);
-              cout<<"\n DOne! balancing";
               break;
-      case 2:printBtree(root);
+      case 2:printBtree(root,root);
               cout<<"\nDone!";
+              break;
+      case 3:cout<<"\nEnter number:";
+              int num;cin>>num;
+              search(root,root,num);
+              printBtree(root,root);
               break;
 
     }
