@@ -2,6 +2,7 @@
 
 using namespace std;
 int maxpos=0;
+
 void swap(int a[],int i,int j)
 {
   int temp;
@@ -9,6 +10,7 @@ void swap(int a[],int i,int j)
   a[i]=a[j];
   a[j]=temp;
 }
+
 int findmax(int a[],int n,int oldmax)
 {
   int m=0;
@@ -26,6 +28,7 @@ int findmax(int a[],int n,int oldmax)
   }
   return maxpos;
 }
+
 int mobile(int a[],int n)
 {
   int currentMax=10000,max;
@@ -79,19 +82,19 @@ int main()
   a[i]=-(i+1);
   k=0;
   printArray(a,n);
- while(mobile(a,n)!=-1)
+ while(1)
   {
     pos=mobile(a,n);
     if(pos==n)
     break;
-//  cout<<"\n-1:"<<pos<<maxpos;printArray(a,n);
+
     swap(a,maxpos,pos);
-  //cout<<"\n1:";printArray(a,n);
+
     update(a,n,pos);
-  //cout<<"\n2:";printArray(a,n);
+
     printArray(a,n);
     k++;
   }
-  cout<<"\nk:"<<k;
+  cout<<"\nnumber of permutations:"<<k+1;
   return 0;
 }
