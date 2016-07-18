@@ -32,27 +32,22 @@ int mobile(int a[],int n)
   for(int i=0;i<n;i++)
   {
     max=findmax(a,n,currentMax);
-    cout<<"\nmax:"<<a[max];
+
     currentMax=a[max];
     if(a[max]<0&&max!=0)
     {
       if(abs(a[max-1])<abs(a[max]))
        {
-         cout<<"\nmax-1:"<<abs(a[max-1]);return max-1;
+        return max-1;
        }
-       else
-       return -1;
     }
     else
     if(a[max]>0&&max!=n-1)
     {
       if(abs(a[max+1])<abs(a[max]))
       {
-        cout<<"\nmax+1:"<<abs(a[max+1]);
         return max+1;
       }
-      else
-      return -1;
     }
 
 
@@ -72,7 +67,7 @@ void printArray(int a[],int n)
 {
   cout<<"\n";
   for(int i=0;i<n;i++)
-  cout<<" "<<(a[i]);
+  cout<<" "<<abs(a[i]);
 }
 int main()
 {
@@ -82,18 +77,21 @@ int main()
   int *a=new int[n];
   for(int i=0;i<n;i++)
   a[i]=-(i+1);
-
+  k=0;
   printArray(a,n);
  while(mobile(a,n)!=-1)
   {
     pos=mobile(a,n);
-    cout<<"\n-1:"<<pos<<maxpos;printArray(a,n);
+    if(pos==n)
+    break;
+//  cout<<"\n-1:"<<pos<<maxpos;printArray(a,n);
     swap(a,maxpos,pos);
-    cout<<"\n1:";printArray(a,n);
+  //cout<<"\n1:";printArray(a,n);
     update(a,n,pos);
-    cout<<"\n2:";
+  //cout<<"\n2:";printArray(a,n);
     printArray(a,n);
-    cin>>k;
+    k++;
   }
+  cout<<"\nk:"<<k;
   return 0;
 }
