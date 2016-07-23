@@ -52,17 +52,16 @@ void printStack(node*s)
     s=s->next;
   }
 }
-void draw(int maze[8][8],int row,int column)
+void draw(int bard[8][8],int row,int column)
 {
-  cout<<"\nMaze:\n";
+  cout<<"\nBoard:\n";
 
   for(int i=0;i<row;i++)
   {
   for(int j=0;j<column;j++)
-  if(maze[i][j]<0)
-  {cout<<maze[i][j]<<"  ";}
-  else
-  {cout<<maze[i][j]<<"";}
+  {
+    cout<<bard[i][j];
+  }
   cout<<"\n";
   }
 
@@ -70,10 +69,10 @@ void draw(int maze[8][8],int row,int column)
 int checkboard(int board[8][8],int currenti,int currentj,int row,int column)
 {
   int i=currenti,j=currentj;
-  cout<<endl<<"Row";
+  //cout<<endl<<"Row";
   while(j>=0)
   {
-    cout<<endl<<i<<","<<j<<":"<<board[i][j];
+    //cout<<endl<<i<<","<<j<<":"<<board[i][j];
     if(board[i][j]==1)
     {
       return 0;
@@ -81,11 +80,11 @@ int checkboard(int board[8][8],int currenti,int currentj,int row,int column)
     else
     j-=1;
   }
-  cout<<endl<<"lower diag";
+  //cout<<endl<<"lower diag";
   i=currenti;j=currentj;
   while(i>=0&&j>=0)
   {
-      cout<<endl<<i<<","<<j<<":"<<board[i][j];
+      //cout<<endl<<i<<","<<j<<":"<<board[i][j];
     if(board[i][j]==1)
     {
       return 0;
@@ -93,11 +92,11 @@ int checkboard(int board[8][8],int currenti,int currentj,int row,int column)
     else
     {j-=1;i-=1;}
   }
-  cout<<endl<<"upper diag";
+  //cout<<endl<<"upper diag";
   i=currenti;j=currentj;
   while(i<row&&j>=0)
   {
-      cout<<endl<<i<<","<<j<<":"<<board[i][j];
+      //cout<<endl<<i<<","<<j<<":"<<board[i][j];
     if(board[i][j]==1)
     {
       return 0;
@@ -117,43 +116,48 @@ int main()
   int currentNum=0;
   node*s=NULL;
   node*temp;
-  while(currentNum!=num)
+  if(num>8)
+  cout<<"\nYou should learn Pigeon HOle principle lol!XD";
+  else
   {
+    while(currentNum!=num)
+    {
 
-    if(i==8)
-    {
-      cout<<"\nPOPING:";
-      temp=pop(s);
-      board[temp->i][temp->j]=0;
-      currentNum-=1;
-      i=temp->i+1;
-      j-=1;
-      if(temp==NULL)
+      if(i==8)
       {
-        cout<<"Not possible!!";
-        break;
+
+        temp=pop(s);
+        board[temp->i][temp->j]=0;
+        currentNum-=1;
+        i=temp->i+1;
+        j-=1;
+        if(temp==NULL)
+        {
+          cout<<"Not possible!!";
+          break;
+        }
       }
+      else
+      if(board[i][j]==0&&checkboard(board,i,j,8,8)==1)
+      {
+
+        board[i][j]=1;
+        currentNum+=1;
+        push(s,i,j);
+        i=0;
+        j+=1;
+      }
+      else
+      {
+
+        i+=1;
+      }
+
     }
-    else
-    if(board[i][j]==0&&checkboard(board,i,j,8,8)==1)
-    {
-      cout<<"\nFOUND POS";
-      board[i][j]=1;
-      currentNum+=1;
-      push(s,i,j);
-      i=0;
-      j+=1;
-    }
-    else
-    {
-      cout<<"\nNEXT";
-      i+=1;
-    }
+
     printStack(s);
     draw(board,8,8);
-
   }
-
 
   return 0;
 }
