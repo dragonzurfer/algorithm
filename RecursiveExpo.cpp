@@ -1,32 +1,62 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int exp(int n,int k)
+int s[2][2]={{1,1},{1,0}};
+int f[2][2]={{1,1},{1,0}};
+
+void matrixMultiply(int a[2][2],int b[2][2])
 {
-  int s,t;
+  //int x =  a[0][0]*b[0][0] + a[0][1]*b[1][0];
+  //int y =  a[0][0]*b[0][1] + a[0][1]*b[1][1];
+  //int z =  a[1][0]*b[0][0] + a[1][1]*b[1][0];
+  //int w =  a[1][0]*b[0][1] + a[1][1]*b[1][1];
+  int c[2][2]={{0,0},{0,0}};
+  for(int i=0;i<2;i++)
+  for(int j=0;j<2;j++)
+  {
+    c[i][j];
+    for(int k=0;k<2;k++)
+    c[i][j]=c[i][j]+a[i][k]*b[k][j];
+  }
+  s[0][0]=c[0][0];//x;
+  s[0][1]=c[0][1];//y;
+  s[1][0]=c[1][0];//z;
+  s[1][1]=c[1][1];//w;
+
+}
+
+int exp(int n[2][2],int k)
+{
+
   if(k==2)
-  return n*n;
+  {matrixMultiply(n,n);return 1;}
   if(k==1)
-  return n;
+  return 1;
 
   if(k%2==0&&k>2)
   {
-    s=exp(n,k/2);
-    return s*s;
+    exp(n,k/2);
+    matrixMultiply(s,s);
   }
   else if(k%2==1&&k>2)
   {
-    s=exp(n,k/2);
-    return s*s*n;
+    exp(n,k/2);
+    matrixMultiply(s,s);
+    matrixMultiply(s,f);
   }
+  return s[0][0];
 }
 
 int main()
 {
   int n,k;
   while(1){
-  cout<<"\nnumber,exp:";
-  cin>>n;cin>>k;
-  cout<<"\nAnswer:"<<exp(n,k);
+  cout<<"\nnth fib o:";
+  cin>>k;
+  cout<<"\nAnswer:"<<exp(s,k-1);
+  s[0][0]=1;
+  s[0][1]=1;
+  s[1][0]=1;
+  s[1][1]=0;
 }  return 0;
 }
