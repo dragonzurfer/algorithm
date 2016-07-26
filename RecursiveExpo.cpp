@@ -4,7 +4,7 @@ using namespace std;
 int s[2][2]={{1,1},{1,0}};
 int f[2][2]={{1,1},{1,0}};
 
-void matrixMultiply(int a[2][2],int b[2][2])
+void matrixMultiply(int res[2][2],int a[2][2],int b[2][2])
 {
   //int x =  a[0][0]*b[0][0] + a[0][1]*b[1][0];
   //int y =  a[0][0]*b[0][1] + a[0][1]*b[1][1];
@@ -18,31 +18,22 @@ void matrixMultiply(int a[2][2],int b[2][2])
     for(int k=0;k<2;k++)
     c[i][j]=c[i][j]+a[i][k]*b[k][j];
   }
-  s[0][0]=c[0][0];//x;
-  s[0][1]=c[0][1];//y;
-  s[1][0]=c[1][0];//z;
-  s[1][1]=c[1][1];//w;
+  res[0][0]=c[0][0];//x;
+  res[0][1]=c[0][1];//y;
+  res[1][0]=c[1][0];//z;
+  res[1][1]=c[1][1];//w;
 
 }
 
-int exp(int n[2][2],int k)
+int exp(int s[2][2],int k)
 {
-
-  if(k==2)
-  {matrixMultiply(n,n);return 1;}
-  if(k==1)
-  return 1;
-
-  if(k%2==0&&k>2)
+  int res[2][2]={{1,0},{0,1}};
+  while(k>0)
   {
-    exp(n,k/2);
-    matrixMultiply(s,s);
-  }
-  else if(k%2==1&&k>2)
-  {
-    exp(n,k/2);
-    matrixMultiply(s,s);
-    matrixMultiply(s,f);
+    if(k&1)
+    matrixMultiply(res,res,s);
+    k=k>>2;
+    matrixMultiply(s,s,s);
   }
   return s[0][0];
 }
