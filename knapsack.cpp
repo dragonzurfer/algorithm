@@ -6,6 +6,9 @@ int knapsack(int value[],int w[],int n,int totalCapacity)
 {
   int i,j;
   int k[n+1][totalCapacity+1];
+  for(int i=0;i<n+1;i++)
+  for(int j=0;j<totalCapacity+1;j++)
+  k[i][j]=0;
 
   for (i = 0; i <=n; i++)
   {
@@ -17,9 +20,17 @@ int knapsack(int value[],int w[],int n,int totalCapacity)
         k[i][j]=maxi(value[i-1]+k[i-1][j-w[i-1]],k[i-1][j]);
         else
         k[i][j]=k[i-1][j];
-        cout<<"\nA\n";
+        //representation of matrix after each state
+        cout<<"\nA\n  ";
+        for(int i=0;i<totalCapacity+1;i++)
+        cout<<i<<" ";
+        cout<<endl;
         for(int l=0;l<=n;l++)
         {
+          if(l!=0)
+          cout<<value[l-1]<<"|";
+          else
+          cout<<" |";
           for(int q=0;q<=totalCapacity;q++)
           cout<<k[l][q]<<" ";
           cout<<endl;
@@ -27,6 +38,14 @@ int knapsack(int value[],int w[],int n,int totalCapacity)
     }
   }
 
+
+  for (i = n; i >=0; i--)
+  {
+    for ( j = totalCapacity; j >=0; j--)
+    {
+      if(k[i][j])
+    }
+  }
   return k[n][totalCapacity];
 }
 
