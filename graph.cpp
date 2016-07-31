@@ -24,7 +24,7 @@ void graph::addNode(int v,int e)
 }
 void graph::bfs(int s)
 {
-
+  int k=1;
   bool *visited=new bool[NumberOfVertices];
   for(int i=0;i<NumberOfVertices;i++)
   visited[i]=false;
@@ -44,6 +44,11 @@ void graph::bfs(int s)
       visited[*i]=true;
       queue.push_back(*i);
       }
+    }
+    for(i=queue.begin();i!=queue.end();++i)
+    {
+      cout<<"\nAfter State:"<<k;++k;
+      cout<<"\nqueue:"<<*i<<" visited"<<visited[*i];
     }
 
   }
