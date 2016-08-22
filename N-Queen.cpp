@@ -2,7 +2,7 @@
 
 using namespace std;
 
-struct node
+stuct node
 {
   int i,j;
   node *next;
@@ -152,11 +152,15 @@ int main()
 
         i+=1;
       }
-
+      draw(board,8,8);
+      int l;
+      cin>>l;
     }
 
     printStack(s);
     draw(board,8,8);
+    int l;
+    cin>>l;
   }
 
   return 0;

@@ -49,9 +49,9 @@ void draw(int **maze,int row,int column)
   {
   for(int j=0;j<column;j++)
   if(maze[i][j]<0)
-  {cout<<maze[i][j]<<"  ";}
+  {cout<<maze[i][j]<<" ";}
   else
-  {cout<<maze[i][j]<<"   ";}
+  {cout<<maze[i][j]<<"  ";}
   cout<<"\n";
   }
 
@@ -182,7 +182,7 @@ for(int i=1;i<row-1;i++)
           break;
         }
     }
-
+      
   }
 
   return 0;

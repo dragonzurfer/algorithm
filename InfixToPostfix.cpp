@@ -77,7 +77,6 @@ int main()
     if(parse=='(')
     {
       push(s,parse);
-
     }
     else
     if(isalpha(parse)||isdigit(parse))//all digits and variable is printed
@@ -91,7 +90,7 @@ int main()
       temp=pop(s);
       while(temp!=NULL)
       {
-        if(temp->s==')')
+        if(temp->s=='(')
           break;
         else
         {
@@ -125,6 +124,9 @@ int main()
       }
     }
     i+=1;
+    printStack(s);
+    int l;
+    cin>>l;
   }
 
   while(s!=NULL)

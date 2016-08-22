@@ -39,13 +39,15 @@ void matrixEvenMultiply(int a[2][2],int b[2][2])
 
 int exp(int s[2][2],int k)
 {
-  if(k==1||k==0)
-  return 1;
-  exp(s,k/2);
+  while(k>0)
+  {
+
+  if(k&1)
+  matrixEvenMultiply(res,s);
+  k=k/2;
   matrixMultiply(s,s);
-  if(k%2)
-  matrixMultiply(s,f);
-  return s[0][0];
+}
+  return res[0][0];
 }
 
 int main()
@@ -59,5 +61,9 @@ int main()
   s[0][1]=1;
   s[1][0]=1;
   s[1][1]=0;
+  res[0][0]=1;
+  res[0][1]=0;
+  res[1][0]=0;
+  res[1][1]=1;
 }  return 0;
 }

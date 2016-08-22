@@ -71,7 +71,7 @@ void printArray(int a[],int n)
 {
   cout<<"\n";
   for(int i=0;i<n;i++)
-  cout<<" "<<abs(a[i]);
+  cout<<" "<<a[i];
 }
 int main()
 {
@@ -94,7 +94,7 @@ int main()
     update(a,n,pos);//maxpos is interchanges with pos hence updating by passing pos
 
     printArray(a,n);//prints the state of the array
-
+cin>>k;
     k++;
   }
   cout<<"\nnumber of permutations:"<<k+1;
