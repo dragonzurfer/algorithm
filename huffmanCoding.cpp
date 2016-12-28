@@ -4,10 +4,10 @@ using namespace std;
 #define REMOVE_SPACES(x) x.erase(std::remove(x.begin(), x.end(), ' '), x.end())
 #define For(i,v,n) for(int i=v;i<n;i++)
 #define For1(i,v) for(int i=v;i>=0;i--)
-map<string,string>codes;
+map<int,string>codes;
 struct node{
-  string val;int freq;
-  char *val2;
+  int val,freq;
+
   node *a[2];
 };
 
@@ -43,33 +43,52 @@ void visualTree(node*p,int indent)
     }
     return;
 }
-node* huffman(string c,int len)
+node* huffman(int c[],int len)
 {
-
-  map<char,int>m;
+  int flag=0;
+  map<int,int>m;
   priority_queue<pp>pq;
   For(i,0,len)
   {
-    if(c[i]!=' ')
+    if(i!=0)
+    if(c[i-1]!=c[i])
+    {flag=1;}
     m[c[i]]=m[c[i]]+1;
+  //  cout<<"count:"<<c[i]<<"->"<<m[c[i]]<<endl;
   }
-
+  if(flag==0)
+  {
+    node* n= new node;
+    n->val=0;
+    n->a[1]=NULL;
+    n->a[0]=NULL;return n;
+  }
+  map<int,int>check;
   For(i,0,len)
   {
-    if(c[i]!=' ')
-  { node* newnode=new node;
+
+    node* newnode=new node;
     newnode->val=c[i];
     newnode->a[0]=newnode->a[1]=NULL;
     newnode->freq=m[c[i]];
+    //printf("NOd:%d\n",newnode->freq);
     if(m[c[i]]!=0)
     {
-      pq.push(make_pair(len-m[c[i]],newnode));
-      m.erase(c[i]);
+      if(check[c[i]]==0)
+      {pq.push(make_pair(len-m[c[i]],newnode));check[c[i]]=1;}
+      check[c[i]]=1;
     }
-   }
+
   }
  while (pq.size()!=1)
   {
+    priority_queue<pp>q=pq;
+    //cout<<endl;
+    //while(!q.empty())
+    //{
+    //  cout<<" #"<<q.top().first<<"->"<<q.top().second->val;
+    //  q.pop();
+    //}
      node* node1;
      node* node2;
      node1=pq.top().second;
@@ -79,6 +98,7 @@ node* huffman(string c,int len)
      node* pushBackNode=new node;
      pushBackNode->val=node1->val+node2->val;
      pushBackNode->a[0]=node1;pushBackNode->a[1]=node2;
+     //printf("pushbackNOd:%d\n",node1->freq+node2->freq );
      pushBackNode->freq=node1->freq+node2->freq;
      pq.push(make_pair(len-pushBackNode->freq,pushBackNode));
   }
@@ -89,40 +109,35 @@ printpq(pq.top().second,"");
 
 int main()
 {
-  int len;
-
-  cin>>len;
-  string c;
-
-  cin.ignore();
-  getline(cin,c);
-  REMOVE_SPACES(c);
-
+  int len,l,r,q;
   node*root;
+  cin>>len;
+  int c[len];
 
+  For(i,0,len)
+    cin>>c[i];
 
-
-  int l,r,q;
-  string sub,s="";
   cin>>q;
   while(q--)
   {
     cin>>l>>r;
-    sub=c.substr(l-1,r-l+1);
+    if(l!=r){
+    int sub[r-l+1];
+    for(int i=0;i<r-l+1;i++)
+    sub[i]=c[l-1+i];
     root=huffman(sub,r-l+1);
-    visualTree(root,4);
-    cout<<"string:"<<sub;
-    s="";
-    For(i,0,r-l+1)
+    //visualTree(root,4);
+    string s="";
+    For(i,l-1,r)
     {
-      string firstLetter(1,sub[i]);
-      //cout<<firstLetter<<"->"<<codes[firstLetter]<<endl;
-      s=s+codes[firstLetter];
+
+      //cout<<c[i]<<"->"<<codes[c[i]]<<endl;
+      s=s+codes[c[i]];
     }
 
 
     cout<<s.length()<<endl;
-  }
-
+  }else cout<<"0"<<endl;
+}
   return 0;
 }

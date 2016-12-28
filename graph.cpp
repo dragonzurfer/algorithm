@@ -4,34 +4,34 @@ using namespace std;
 
 class graph
 {
-  int NumberOfVertices;
-  list<int> *adj;
+  long long NumberOfVertices;
+  list<long long> *adj;
 public:
-  graph(int v);
-  void addNode(int v,int e);
-  void bfs(int s);
+  graph(long long v);
+  void addNode(long long v,long long e);
+  void bfs(long long find,long long s);
 };
 
-graph::graph(int v)
+graph::graph(long long v)
 {
   this->NumberOfVertices=v;
-  adj=new list<int>[NumberOfVertices];
+  adj=new list<long long>[NumberOfVertices];
 }
 
-void graph::addNode(int v,int e)
+void graph::addNode(long long v,long long e)
 {
   adj[v].push_back(e);
 }
-void graph::bfs(int s)
+void graph::bfs(long long s)
 {
-  int k=1;
+  long long k=1;
   bool *visited=new bool[NumberOfVertices];
-  for(int i=0;i<NumberOfVertices;i++)
+  for(long long i=0;i<NumberOfVertices;i++)
   visited[i]=false;
-  list<int>queue;
+  list<long long>queue;
   visited[s]=true;
   queue.push_back(s);
-  list<int>::iterator i;
+  list<long long>::iterator i;
   while(!queue.empty())
   {
     s=queue.front();
@@ -54,15 +54,17 @@ void graph::bfs(int s)
   }
 }
 
-int main()
+long long main()
 {
   graph g(4);
+
   g.addNode(0,1);
   g.addNode(0,2);
   g.addNode(1,2);
   g.addNode(2,0);
   g.addNode(2,3);
   g.addNode(3,3);
-  g.bfs(2);
+  long long dist=g.bfs(0,2);
+  dist=g.bfs(1,2);
   return 0;
 }
