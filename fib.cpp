@@ -1,6 +1,10 @@
 #include<bits/stdc++.h>
 using namespace std;
+<<<<<<< HEAD
 //test11
+=======
+//tes1
+>>>>>>> e2cd0486e11828e2d7c4dfc65554b267144fa957
 int s[2][2]={{1,1},{1,0}};
 int f[2][2]={{1,1},{1,0}};
 int res[2][2]={{1,0},{0,1}};
