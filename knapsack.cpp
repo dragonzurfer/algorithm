@@ -37,11 +37,13 @@ void traceItems(int **k,int value[],int w[],int n,int totalCapacity)
     i-=1;
   }
 }
+
 int knapsack(int value[],int w[],int n,int totalCapacity)
 {
   int i,j;
   int **k;
   k = new int *[n+1];
+  int recon[n+1][totalCapacity+1];
   for(int i = 0; i <n+1; i++)
     k[i] = new int[totalCapacity+1];
 
@@ -56,14 +58,19 @@ int knapsack(int value[],int w[],int n,int totalCapacity)
         if(i==0||j==0)
         k[i][j]=0;
         else if(w[i-1]<=j)
-        k[i][j]=maxi(value[i-1]+k[i-1][j-w[i-1]],k[i-1][j]);
+        {
+        // k[i][j]=maxi(value[i-1]+k[i-1][j-w[i-1]],k[i-1][j]);
+        	if(value[i-1]+k[i-1][j-w[i-1]]>=k[i-1][j])
+        		{k[i][j]=value[i-1]+k[i-1][j-w[i-1]];recon[i][j]=i-1;}
+        	else{ k[i][j]=k[i-1][j];recon[i][j]=-1;}
+    	}
         else
         k[i][j]=k[i-1][j];
         //representation of matrix after each state
         //draw(k,value,w,n,totalCapacity);
     }
   }
-  traceItems(k,value,w,n,totalCapacity);
+   traceItems(k,value,w,n,totalCapacity);
 
   return k[n][totalCapacity];
 }

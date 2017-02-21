@@ -16,7 +16,8 @@ typedef long long ll;
 int maxmialMatch(list<ll>graph[],ll n)
 {
 	set<pll> matching;
-	map<ll,bool> matchedVertex;
+	bool matchedVertex[n];
+	memset(matchedVertex,false,sizeof(matchedVertex));
 	for(ll v=1;v<n;v++)
 	for(auto&u:graph[v])
 	{
