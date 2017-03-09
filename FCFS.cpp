@@ -34,6 +34,7 @@ int main()
 	sort(p,p+n,cmp);
 	FOR1(i,n-1)
 	cout<<p[i].atime<<"-"<<p[i].btime<<"\n";
+	
 	int finishing_time[n],turnaround_time[n],waiting_time[n],currentTime=0;
 	FOR1(i,n-1)
 	{
@@ -62,8 +63,8 @@ int main()
 	{
 		avg_ttime+=turnaround_time[i];
 		avg_wtime+=waiting_time[i];
-		// cout<<turnaround_time[i]<<endl;
 	}
+
 	cout<<"\navg wait time:"<<(double)avg_wtime/n;
 	cout<<"\navg turnaround time:"<<(double)avg_ttime/n;
 	return 0;
