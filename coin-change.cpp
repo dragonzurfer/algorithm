@@ -28,14 +28,14 @@ int main()
 
 	FOR2(i,1,n-1)
 	{
-		FOR2(j,1,amt-1)
+		FOR2(j,0,amt-1)
 		{
-			if(s[i]<=i)
-			dp[i][j]+=(dp[i-s[j]][j]);
+			if(c[i]<=i)
+			dp[i][j]+=(dp[i-c[j]][j]);
 			if(j>0)
 			dp[i][j]+=(dp[i][j-1]);
 		}
 	}
-	cout<<"Number of ways:"<<dp[n][m-1];
+	cout<<"Number of ways:"<<dp[n][amt-1];
 	return 0;
 }
