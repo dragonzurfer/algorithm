@@ -22,3 +22,5 @@
 	* Two D matrix in One D
 	* Red black tree
 	* Knapsack
+	* Longest palindromic subsequence
+	* Egg dropping
