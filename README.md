@@ -24,3 +24,5 @@
 	* Knapsack
 	* Longest palindromic subsequence
 	* Egg dropping
+	* maximum sum- Increasing Subsequence
+	* longest bitonic Sequence
