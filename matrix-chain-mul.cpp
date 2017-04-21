@@ -44,5 +44,6 @@ int main()
   cout<<m[i][j]<<" ";
   cout<<endl;
   }
+  cout<<"sol:"<<m[1][n];
   print(1,n);
 }
