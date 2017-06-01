@@ -40,6 +40,20 @@ struct BIT
     T query(int u,int v)
     {
     	return (query(v)-query(u-1));
+    }
+    T querySingle(int u)
+    {
+    	T sum=bit[u];
+    	if(u>0){
+    		int z=u-(u&-u);
+    		u--;
+    		while(u!=z)
+    		{
+    			sum-=bit[u];
+    			u-=(u&-u);
+    		}
+    	}
+    	return sum;
     }    
 };
 
